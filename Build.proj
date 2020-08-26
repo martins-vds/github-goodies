@@ -1,4 +1,4 @@
-<Project DefaultTargets="Clean">
+<Project DefaultTargets="Build">
   <PropertyGroup>
     <SrcRoot>$(MSBuildThisFileDirectory)</SrcRoot>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(SrcRoot)\</SolutionDir>
@@ -21,10 +21,7 @@
   <ItemGroup>
     <ProjectFiles Include="src\**\*.csproj" />
   </ItemGroup>
-  <Target Name="Clean"
-        Condition=" '$(_InvalidConfigurationWarning)' != 'true' "
-        DependsOnTargets="$(CleanDependsOn)" />
-  <Target Name="Build" AfterTargets="Clean">
+  <Target Name="Build">
     <MSBuild Projects="@(ProjectFiles)" Targets="Build" Properties="Configuration=$(Configuration);OutDir=$(OutDir.TrimEnd('\'))\%(Filename)\"/>   
   </Target>
   <Target Name="ZipOutputPath" AfterTargets="Build" Condition="'$(ZipOutputPath)' != ''">
