@@ -40,12 +40,12 @@ jobs:
         application: ${{ fromJson(needs.pre-deploy.outputs.applications) }}
         include:
           - application: csa
-            deployLocation: CSA_DEPLOY_LOCATION
+            deployLocation: ${{ secrets.CSA_DEPLOY_LOCATION }}
           
     steps:
     - name: Deploy to QA
       env:
         APP: ${{ matrix.application }}
-        DROP_FOLDER: ${{ secrets[matrix.deployLocation] }}
+        DROP_FOLDER: ${{ matrix.deployLocation }}
       run: |
         Write-Host "Deploying to QA - $env:APP - $env:DROP_FOLDER"
