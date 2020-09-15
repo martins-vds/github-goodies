@@ -7,12 +7,16 @@ on:
       - prod
     types:
       - closed
-
+  workflow_dispatch:
+    inputs:
+      label:
+        required: true
+        description: "Single label"
 jobs:
   pre-deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     outputs:
-      applications: ${{ steps.extract-app-names.outputs.substrings}}
+      applications: ${{ steps.extract-app-names.outputs.substrings }}
       environment: ${{ steps.extract-env-name.outputs.environment }}
     steps:
       - id: extract-app-names
@@ -29,29 +33,19 @@ jobs:
 
   deploy-to-qa:
     needs: pre-deploy
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
     if: needs.pre-deploy.outputs.environment == 'qa'
     strategy:
       matrix:
-        applications: ${{ fromJson(needs.pre-deploy.outputs.applications) }}
+        application: ${{ fromJson(needs.pre-deploy.outputs.applications) }}
+        include:
+          - application: csa
+            deployLocation: CSA_DEPLOY_LOCATION
+          
     steps:
-    - name: Start deployment
-      uses: bobheadxi/deployments@master
-      id: qa_deployment
-      with:
-        step: start
-        token: ${{ secrets.GITHUB_TOKEN }}
-        env: QA
     - name: Deploy to QA
       env:
-        APP: ${{ matrix.applications }}
+        APP: ${{ matrix.application }}
+        DROP_FOLDER: ${{ secrets[matrix.deployLocation] }}
       run: |
-        echo "Deploying to QA - $APP"
-    - name: Update deployment status
-      uses: bobheadxi/deployments@master
-      if: always()
-      with:
-        step: finish
-        token: ${{ secrets.GITHUB_TOKEN }}
-        status: ${{ job.status }}
-        deployment_id: ${{ steps.qa_deployment.outputs.deployment_id }}
+        Write-Host "Deploying to QA - $env:APP - $env:DROP_FOLDER"
