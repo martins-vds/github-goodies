@@ -1,0 +1,8 @@
+mode: Mainline
+branches:
+  master:
+    mode: ContinuousDelivery
+  develop: {}
+ignore:
+  sha: []
+merge-message-formats: {}
