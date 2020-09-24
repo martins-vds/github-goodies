@@ -9,10 +9,14 @@
 		<PackageReference Include="Ardalis.EFCore.Extensions" Version="1.1.0" />
 		<PackageReference Include="Ardalis.Specification" Version="4.1.0" />
 		<PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="4.1.0" />
+		<PackageReference Include="GitVersionTask" Version="5.3.7">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8" PrivateAssets="All" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
 	</ItemGroup>
 	<ItemGroup>
