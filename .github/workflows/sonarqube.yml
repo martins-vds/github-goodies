@@ -44,3 +44,4 @@ jobs:
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
           -Dsonar.scm.provider=git
           -Dsonar.java.binaries=/tmp
+          -Dsonar.sources=.
