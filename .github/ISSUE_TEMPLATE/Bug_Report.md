@@ -1,11 +1,12 @@
 ---
-name: Bug report 🐛
-about: Report errors or unexpected behavior 🤔
-title: "My bug report"
-labels: Issue-Question
+name: "Bug report \U0001F41B"
+about: "Report errors or unexpected behavior \U0001F914"
+title: My bug report
+labels: ''
 assignees: ''
 
 ---
+
 <!--
 
 For Windows PowerShell 5.1 issues, suggestions, or feature requests please use the following link instead:
