@@ -1,0 +1,12 @@
+{
+  "ServerUri": "https://sonarq.azurewebsites.net/",
+  "Organization": null,
+  "ProjectKey": "github-goodies",
+  "ProjectName": "Github Goodies",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AXcsMnC9NfyVnFPevMRM",
+      "ProfileTimestamp": "2021-01-22T22:23:59Z"
+    }
+  }
+}

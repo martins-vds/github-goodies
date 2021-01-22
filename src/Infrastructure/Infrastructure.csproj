@@ -3,7 +3,12 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<RootNamespace>Microsoft.eShopWeb.Infrastructure</RootNamespace>
+		<CodeAnalysisRuleSet>..\..\.sonarlint\github-goodiescsharp.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Include="..\..\.sonarlint\github-goodies\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Ardalis.EFCore.Extensions" Version="1.1.0" />

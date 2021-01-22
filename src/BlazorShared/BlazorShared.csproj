@@ -4,7 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>BlazorShared</RootNamespace>
     <AssemblyName>BlazorShared</AssemblyName>
+    <CodeAnalysisRuleSet>..\..\.sonarlint\github-goodiescsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\.sonarlint\github-goodies\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
