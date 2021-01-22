@@ -23,6 +23,8 @@ jobs:
     - name: Setup Report Generator Tool
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Build with dotnet
       run: dotnet build ./eShopOnWeb.sln --configuration Release
     - name: Test with dotnet

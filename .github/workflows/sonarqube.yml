@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - '.github/**'
 
 jobs:
   build:
@@ -11,6 +13,8 @@ jobs:
     steps:
       - name: Setup sonar scanner
         uses: warchant/setup-sonar-scanner@v3
+        with:
+            version: 4.6.0.2311
       - name: 'Checkout repository on branch: ${{ github.REF }}'
         uses: actions/checkout@v2
         with:
