@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  sonarqube:
+    image: sonarqube:7.6-community
+    restart: always
+    ports: 
+      - "9000:9000"
+    environment:
+      SONARQUBE_JDBC_USERNAME: sonar
+      SONARQUBE_JDBC_PASSWORD: <Password>
+      SONARQUBE_JDBC_URL: jdbc:sqlserver://sonarqdb:1433;database=sonar;user=sonar@sonarqdb;password=<PASSWORD>;encrypt=true;trustServerCertificate=false;loginTimeout=30;
