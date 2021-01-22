@@ -32,6 +32,7 @@ jobs:
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
           -Dsonar.branch.name=${GITHUB_REF:11}
           -Dsonar.scm.provider=git
+          -Dsonar.sources=.
 
       - if: endsWith(github.REF, '/master') == true
         name: 'Run an analysis of the master branch'
