@@ -1,4 +1,4 @@
-name: Deployment
+name: Deployment - PR
 
 on:
   pull_request:

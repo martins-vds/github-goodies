@@ -1,0 +1,68 @@
+name: Deployment - ADHOC
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Deployment target environment'
+        required: true
+        default: 'all'
+      apps:
+        description: 'JSON array of applications to deploy'
+        required: true
+        default: '[]'
+jobs:
+  deploy-dev:
+    if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'dev'}}
+    runs-on: windows-latest
+    environment:
+      name: dev
+    strategy:
+      matrix:
+        application: ${{ fromJson(github.event.inputs.apps) }}
+        include:
+          - application: csa
+            deployLocation: CSA_DEPLOY_LOCATION
+    steps:
+    - name: Deploy to DEV
+      env:
+        APP: ${{ matrix.application }}
+        DROP_FOLDER: ${{ secrets[matrix.deployLocation] }}
+      run: |
+        Write-Host "Deploying to DEV - $env:APP - $env:DROP_FOLDER"
+  deploy-qa:
+    if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'qa'}}
+    runs-on: windows-latest
+    environment:
+      name: qa
+    strategy:
+      matrix:
+        application: ${{ fromJson(github.event.inputs.apps) }}
+        include:
+          - application: csa
+            deployLocation: CSA_DEPLOY_LOCATION
+    steps:
+    - name: Deploy to QA
+      env:
+        APP: ${{ matrix.application }}
+        DROP_FOLDER: ${{ secrets[matrix.deployLocation] }}
+      run: |
+        Write-Host "Deploying to QA - $env:APP - $env:DROP_FOLDER"
+  deploy-prod:
+    if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'prod'}}
+    runs-on: windows-latest
+    environment:
+      name: prod
+    strategy:
+      matrix:
+        application: ${{ fromJson(github.event.inputs.apps) }}
+        include:
+          - application: csa
+            deployLocation: CSA_DEPLOY_LOCATION
+    steps:
+    - name: Deploy to PROD
+      env:
+        APP: ${{ matrix.application }}
+        DROP_FOLDER: ${{ secrets[matrix.deployLocation] }}
+      run: |
+        Write-Host "Deploying to PROD - $env:APP - $env:DROP_FOLDER"
