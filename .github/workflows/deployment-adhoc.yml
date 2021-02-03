@@ -13,7 +13,7 @@ on:
         default: '[]'
 jobs:
   deploy-dev:
-    if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'dev'}}
+    if: ${{ github.event.inputs.env == 'dev' || github.event.inputs.env == 'all' }}
     runs-on: windows-latest
     environment:
       name: dev
@@ -31,9 +31,8 @@ jobs:
       run: |
         Write-Host "Deploying to DEV - $env:APP - $env:DROP_FOLDER"
   deploy-qa:
-    if: ${{ github.event.inputs.env == 'all' || (github.event.inputs.env == 'qa' && always())}}
+    if: ${{ github.event.inputs.env == 'qa' || (github.event.inputs.env == 'all' && success()) }}
     runs-on: windows-latest
-    needs: deploy-dev
     environment:
       name: qa
     strategy:
@@ -50,9 +49,8 @@ jobs:
       run: |
         Write-Host "Deploying to QA - $env:APP - $env:DROP_FOLDER"
   deploy-prod:
-    if: ${{ github.event.inputs.env == 'all' || (github.event.inputs.env == 'prod' && always()) }}
+    if: ${{ github.event.inputs.env == 'prod' || (github.event.inputs.env == 'all' && success()) }}
     runs-on: windows-latest
-    needs: deploy-qa
     environment:
       name: prod
     strategy:
