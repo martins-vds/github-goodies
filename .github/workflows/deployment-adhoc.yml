@@ -35,7 +35,7 @@ jobs:
   deploy-qa:
     if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'qa'}}
     runs-on: windows-latest
-    needs:  fromJson(env.jobNeeds)[github.event.inputs.env]
+    needs: ${{ fromJson(env.jobNeeds)[github.event.inputs.env] }}
     environment:
       name: qa
     strategy:
@@ -54,7 +54,7 @@ jobs:
   deploy-prod:
     if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'prod'}}
     runs-on: windows-latest
-    needs: fromJson(env.jobNeeds)[github.event.inputs.env]
+    needs: ${{ fromJson(env.jobNeeds)[github.event.inputs.env] }}
     environment:
       name: prod
     strategy:
