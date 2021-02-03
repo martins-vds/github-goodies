@@ -42,7 +42,7 @@ jobs:
   deploy-qa:
     if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'qa'}}
     runs-on: windows-latest
-    needs: ${{ github.event.inputs.env == 'all' && [deploy-dev] || [] }}
+    needs: deploy-dev
     environment:
       name: qa
     strategy:
@@ -61,7 +61,7 @@ jobs:
   deploy-prod:
     if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'prod'}}
     runs-on: windows-latest
-    needs: ${{ github.event.inputs.env == 'all' && [deploy-qa] || [] }}
+    needs: deploy-qa
     environment:
       name: prod
     strategy:
