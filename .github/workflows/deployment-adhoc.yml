@@ -1,6 +1,6 @@
 name: Deployment - ADHOC
 env:
-  jobNeeds: '{"all":[],"dev":[],"qa":["deploy-dev"],"prod":["deploy-qa"]}'
+  jobNeeds: '{"all":[],"qa":["deploy-dev"],"prod":["deploy-qa"]}'
 on:
   workflow_dispatch:
     inputs:
@@ -13,17 +13,17 @@ on:
         required: true
         default: '[]'
 jobs:
-  # pre-deploy:
-  #   runs-on: windows-latest
-  #   outputs:
-  #     needs: ${{ steps.set-needs.outputs.needs }}
-  #   steps:
-  #     - id: set-needs
-  #       run: echo "::set-output name=needs::fromJson()"
+  pre-deploy:
+    runs-on: windows-latest
+    outputs:
+      needs: ${{ steps.set-needs.outputs.needs }}
+    steps:
+      - id: set-needs
+        run: echo "::set-output name=needs::${{ fromJSON(env.jobNeeds) }}"
   deploy-dev:
     if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'dev'}}
     runs-on: windows-latest
-    #needs: fromJson(env.jobNeeds)[github.event.inputs.env]
+    needs: pre-deploy
     environment:
       name: dev
     strategy:
@@ -42,7 +42,7 @@ jobs:
   deploy-qa:
     if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'qa'}}
     runs-on: windows-latest
-    needs: ${{ fromJSON(env.jobNeeds)[github.event.inputs.env] }}
+    needs: ${{ jobs.pre-deploy.outputs.needs[github.event.inputs.env] }}
     environment:
       name: qa
     strategy:
@@ -61,7 +61,7 @@ jobs:
   deploy-prod:
     if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'prod'}}
     runs-on: windows-latest
-    needs: ${{ fromJSON(env.jobNeeds)[github.event.inputs.env] }}
+    needs: ${{ jobs.pre-deploy.outputs.needs[github.event.inputs.env] }}
     environment:
       name: prod
     strategy:
