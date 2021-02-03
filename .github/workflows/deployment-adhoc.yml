@@ -31,7 +31,7 @@ jobs:
       run: |
         Write-Host "Deploying to DEV - $env:APP - $env:DROP_FOLDER"
   deploy-qa:
-    if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'qa'}}
+    if: ${{ github.event.inputs.env == 'all' || (github.event.inputs.env == 'qa' && always())}}
     runs-on: windows-latest
     needs: deploy-dev
     environment:
@@ -50,7 +50,7 @@ jobs:
       run: |
         Write-Host "Deploying to QA - $env:APP - $env:DROP_FOLDER"
   deploy-prod:
-    if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'prod'}}
+    if: ${{ github.event.inputs.env == 'all' || (github.event.inputs.env == 'prod' && always()) }}
     runs-on: windows-latest
     needs: deploy-qa
     environment:
