@@ -13,6 +13,13 @@ on:
         required: true
         default: '[]'
 jobs:
+  # pre-deploy:
+  #   runs-on: windows-latest
+  #   outputs:
+  #     needs: ${{ steps.set-needs.outputs.needs }}
+  #   steps:
+  #     - id: set-needs
+  #       run: echo "::set-output name=needs::fromJson()"
   deploy-dev:
     if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'dev'}}
     runs-on: windows-latest
@@ -21,7 +28,7 @@ jobs:
       name: dev
     strategy:
       matrix:
-        application: ${{ fromJson(github.event.inputs.apps) }}
+        application: ${{ fromJSON(github.event.inputs.apps) }}
         include:
           - application: csa
             deployLocation: CSA_DEPLOY_LOCATION
@@ -35,12 +42,12 @@ jobs:
   deploy-qa:
     if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'qa'}}
     runs-on: windows-latest
-    needs: ${{ fromJson(env.jobNeeds)[github.event.inputs.env] }}
+    needs: ${{ fromJSON(env.jobNeeds)[github.event.inputs.env] }}
     environment:
       name: qa
     strategy:
       matrix:
-        application: ${{ fromJson(github.event.inputs.apps) }}
+        application: ${{ fromJSON(github.event.inputs.apps) }}
         include:
           - application: csa
             deployLocation: CSA_DEPLOY_LOCATION
@@ -54,7 +61,7 @@ jobs:
   deploy-prod:
     if: ${{ github.event.inputs.env == 'all' || github.event.inputs.env == 'prod'}}
     runs-on: windows-latest
-    needs: ${{ fromJson(env.jobNeeds)[github.event.inputs.env] }}
+    needs: ${{ fromJSON(env.jobNeeds)[github.event.inputs.env] }}
     environment:
       name: prod
     strategy:
